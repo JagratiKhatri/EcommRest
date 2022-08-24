@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Exception.InValidCredentialsException;
 import com.example.demo.Exception.UserAlreadyExitsException;
 import com.example.demo.Exception.userIsNotloggedInException;
 import com.example.demo.model.User;
@@ -40,10 +41,7 @@ public class UserController {
 			if(user.getEmail().equalsIgnoreCase(u.getEmail())) {
 				System.out.println("User already exit ");
 				throw new UserAlreadyExitsException("User already Exits");
-				
 			}
-		
-			
 		}
 		User newUser = userService.getUser(u);
 		return newUser;
@@ -53,7 +51,7 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public boolean loginUser(@RequestParam String email, @RequestParam String password, HttpSession session) {
+	public boolean loginUser(@RequestParam String email, @RequestParam String password, HttpSession session) throws Exception{
 		String lemail=email.toLowerCase();
 		System.out.println(lemail);
 		User u = userService.login(lemail, password);
@@ -64,7 +62,7 @@ public class UserController {
 		}
 
 		else
-			return false;
+			throw new InValidCredentialsException("Invalid Credentails");
 
 	}
 
