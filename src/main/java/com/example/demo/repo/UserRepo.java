@@ -9,7 +9,8 @@ import com.example.demo.model.User;
 @Repository
 public interface UserRepo  extends  JpaRepository<User, Integer>{
 	
-	public User findByEmailAndPassword(String email, String password);
-	public User findByUid(int uid);
+
+	User findByUsername(String username);
+	User findByEmail(String email);
 
 }
